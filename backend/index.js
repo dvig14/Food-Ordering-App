@@ -8,13 +8,7 @@ const getDataRouter = require('./src/routes/getData')
 const authRouter = require('./src/routes/auth')
 const paymentRouter = require('./src/routes/payments')
 
-app.use(cors(
-  {
-    origin:{""},
-    methods:["POST","GET","PATCH"],
-    credentials:true
-  }
-))
+app.use(cors())
 app.use(bodyParser.json());
 app.use('/api',getDataRouter)
 app.use('/auth',authRouter)
