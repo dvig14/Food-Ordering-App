@@ -13,10 +13,12 @@ import MyAccount from './components/MyAccount'
 import EmailConfirm from './components/EmailConfirm'
 import {useContext} from 'react'
 import {LocationContext} from './utils/LocationContext'
+import axios from 'axios'
 
 const App = () => {
 
   const {show} = useContext(LocationContext)
+  axios.defaults.withCredentials = true
 
   return (
     <>
