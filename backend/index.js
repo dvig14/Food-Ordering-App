@@ -10,7 +10,7 @@ const paymentRouter = require('./src/routes/payments')
 
 app.use(cors(
   {
-    origin:{"https://food-ordering-app-azure.vercel.app"},
+    origin:{""},
     methods:["POST","GET","PATCH"],
     credentials:true
   }
