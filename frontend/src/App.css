@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    -webkit-tap-highlight-color: transparent;
+    margin: 0;
+    padding: 0;
+    box-sizing:border-box;
+}
+@layer components {
+   
+    .input{
+        outline:none;
+        padding:2rem 1.5rem 1rem 1.5rem;
+        font-size:1rem;
+        font-weight:600;
+    }
+    label{
+       position:absolute;
+       left:1.5rem;
+       top:1.5rem;
+       font-weight:600;
+       transition: 0.2s ease all;
+    }
+    input:focus + label,.validInput{
+        top:0.7rem;
+        font-size:0.75rem;
+        font-weight:bold;
+    }
+    .validData::before{
+        content:'';
+        position:absolute;
+        top:0;
+        left:0;
+        background:rgba(0, 0, 0, 0.3);
+        width:50%;
+        height:100%;
+        transform:translateX(-100%);
+        transition:all 0.5s linear;
+    }
+    .validData:active:before{
+        transform:translateX(0);
+    }
+    .glassmorph{
+        border: 3px solid rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.05);
+    }
+    .user:hover > div ,.user div:hover{
+        display:flex;
+        flex-direction:column;
+        gap:0.5rem;
+    }
+}
