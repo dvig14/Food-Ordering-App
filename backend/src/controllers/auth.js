@@ -161,7 +161,7 @@ const UpdateProfile = async(req,res) => {
                    Hope you are having a great time with yummy.To complete your email verifcation,
                    please press button below
                    </p>
-                   <a href='http://localhost:3000/emailConfirmed/${id}'>Confirm email</a>
+                   <a href='https://food-ordering-app-frontend-nine.vercel.app/emailConfirmed/${id}'>Confirm email</a>
                  </body>
                  </html>` 
                }  
