@@ -8,7 +8,13 @@ const getDataRouter = require('./src/routes/getData')
 const authRouter = require('./src/routes/auth')
 const paymentRouter = require('./src/routes/payments')
 
-app.use(cors())
+app.use(cors(
+  {
+    origin:{"https://food-ordering-app-yfgn.vercel.app"},
+    methods:["POST","GET","PATCH"],
+    credentials:true
+  }
+))
 app.use(bodyParser.json());
 app.use('/api',getDataRouter)
 app.use('/auth',authRouter)
