@@ -1,20 +1,19 @@
 import {useEffect} from 'react'
 import axios from 'axios'
 import {host} from '../utils/constants'
-import {useLocation} from 'react-router-dom'
+import {useLocation,useNavigate} from 'react-router-dom'
 
 const EmailConfirm = () => {
 
     const location = useLocation()
     const arr = location.pathname.split('/')
-    const id = arr[arr.length - 1]
-    const newEmail = JSON.parse(localStorage.getItem('newEmail'))
+    const id = arr[arr.length - 2]
+    const email = arr[arr.length -1]
+    const navigate = useNavigate()
 
     const sendVerified = async() => {
-        const res = await axios.patch(`${host}auth/signUp/${id}`,{index:1,email:newEmail,verified:true})
-        const {updateProfile} = res.data
-        console.log(updateProfile)
-        if(updateProfile !== undefined) localStorage.setItem('user',JSON.stringify(updateProfile))
+        await axios.patch(`${host}auth/signUp/${id}`,{index:1,email:email,verified:true})
+        setTimeout(()=>navigate('/my-account/edit-profile'),1000)
     }
 
     useEffect(()=>{

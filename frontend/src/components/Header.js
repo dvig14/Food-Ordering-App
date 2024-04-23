@@ -29,7 +29,6 @@ const Header = () => {
 
   const handelLogOut = () => {
     localStorage.removeItem('user') 
-    localStorage.removeItem('newEmail') 
     setUser('Sign In')
   }
   
