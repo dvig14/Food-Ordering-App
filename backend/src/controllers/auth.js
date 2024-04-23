@@ -161,7 +161,7 @@ const UpdateProfile = async(req,res) => {
                    Hope you are having a great time with yummy.To complete your email verifcation,
                    please press button below
                    </p>
-                   <a href='https://food-ordering-app-frontend-nine.vercel.app/emailConfirmed/${id}'>Confirm email</a>
+                   <a href='https://food-ordering-app-frontend-nine.vercel.app/emailConfirmed/${id}/${email}'>Confirm email</a>
                  </body>
                  </html>` 
                }  
@@ -178,4 +178,19 @@ const UpdateProfile = async(req,res) => {
     }
 }
 
-module.exports = {Register,OtpVerification,Login,UpdateProfile}
+const GetUser = async(req,res) => {
+     const id = req.params.id
+
+    try{
+       if(id){
+         const userData = await User.findOne({_id:id})
+         res.json({msg:'success',userData})
+       }
+       else res.json({msg:'not found'})
+    }
+   catch(e) {
+    res.json({msg:e})
+   }
+}
+
+module.exports = {Register,OtpVerification,Login,UpdateProfile,GetUser}
