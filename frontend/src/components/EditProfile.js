@@ -2,7 +2,7 @@ import {useState,useRef} from 'react'
 import axios from 'axios'
 import {host} from '../utils/constants'
 
-const EditProfile = ({phoneNum,email,id}) => {
+const EditProfile = ({phoneNum,email,id,fetchUser}) => {
 
   const [inpChng,setInpChng] = useState([phoneNum,email])
   const [showIdx,setShowIdx] = useState()
@@ -62,9 +62,8 @@ const EditProfile = ({phoneNum,email,id}) => {
           else setOtp({...otp ,showOtp :true})
         } 
         else if(index === 1){
-          const res = await axios.patch(`${host}auth/signUp/${id}`,{index,email : inpChng[1]})
+          const res = await axios.patch(`${host}auth/signUp/${id}`,{index,email : inpChng[1],verified:false})
           if(res.data.msg === 'Email id already exist') handleError(1,res.data.msg)
-          else localStorage.setItem('newEmail',JSON.stringify(inpChng[1]))
         }
       }
 
@@ -83,10 +82,8 @@ const EditProfile = ({phoneNum,email,id}) => {
        })
        if(verify.data.msg === "Invalid Otp Please Try Again") handleError(0,'Invalid Otp')
        else if(verify.data.msg === "verified"){
-         const res = await axios.patch(`${host}auth/signUp/${id}`,{index,phoneNumber : inpChng[0],verified:true})
-         const {updateProfile} = res.data
-         localStorage.removeItem('user')
-         localStorage.setItem('user',JSON.stringify(updateProfile))
+         await axios.patch(`${host}auth/signUp/${id}`,{index,phoneNumber : inpChng[0],verified:true})
+         fetchUser()
          window.location.reload()
        }
     }

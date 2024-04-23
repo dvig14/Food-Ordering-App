@@ -3,20 +3,32 @@ import {useState,useEffect,useRef} from 'react'
 import Orders from './Orders'
 import Payments from './Payments'
 import EditProfile from './EditProfile'
+import axios from 'axios'
+import {host} from '../utils/constants'
 
 const MyAccount = () => {
 
     const normalLink = 'cursor-pointer hover:text-[#263134] m-[1.3rem]'
     const activeLink = 'bg-white px-[1.5rem] mt-[0.8rem] pt-[0.5rem] smallM:mx-[0.6rem]'
-    const user = JSON.parse(localStorage.getItem('user'))
+    
     const location = useLocation()
     const [activePath,setActivePath] = useState('orders')
     const tabs = useRef()
+    const user = JSON.parse(localStorage.getItem('user'))
+
+    const fetchUser = async() => {
+      const res = await axios.get(`${host}auth/getUser/${user._id}`)
+      if(res.data.msg === 'success'){
+        const {userData} = res.data
+        localStorage.setItem('user',JSON.stringify(userData))
+      }
+    }
   
     useEffect(()=>{
       const {pathname} = location
       const name = pathname.split('/')[2]
       setActivePath(name)
+      fetchUser()
     },[location])
     
     return (
@@ -43,7 +55,8 @@ const MyAccount = () => {
             </div>
              { 
                 (activePath === 'orders' && <Orders/>) ||  (activePath === 'payments' && <Payments/>) || 
-                (activePath === 'edit-profile' && <EditProfile phoneNum={user.phoneNumber} email={user.email} id={user._id}/>)
+                (activePath === 'edit-profile' && <EditProfile phoneNum={user.phoneNumber} email={user.email} id={user._id}
+                fetchUser={fetchUser}/>)
              }
           </div>
         </div>

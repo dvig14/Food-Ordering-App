@@ -30,7 +30,7 @@ const App = () => {
        <Route path='/*' element={<Error/>}/>
        <Route path='/cuisine/:cuisineId' element={<Cuisines/>}/>
        <Route path='/my-account/*' element={<MyAccount/>}/>
-       <Route path='/emailConfirmed/:id' element={<EmailConfirm/>}/>
+       <Route path='/emailConfirmed/:id/:email' element={<EmailConfirm/>}/>
       </Routes>
       {show && <Footer/>}
     </>
