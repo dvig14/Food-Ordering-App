@@ -10,7 +10,7 @@ const ItemsList = ({items}) => {
   const {isCart} = useContext(LocationContext)
 
   return(
-    <div className={`${isCart ? 'w-[100%] bg-white' : 'w-full'}`}>
+    <div className={`${isCart ? 'w-[100%] bg-white' : 'w-full mb-[1rem]'}`}>
       {
         items.map((item)=>(
            
