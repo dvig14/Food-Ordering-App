@@ -52,7 +52,7 @@ const RestaurantMenu = () => {
     )
    
     return (
-        <div className='mt-[8rem] text-gray-700 flex flex-col items-center mb-[1.5rem]'>
+        <div className='mt-[8rem] text-gray-700 flex flex-col items-center mb-[2.5rem]'>
             <div className='flex laptop:w-7/12 tablet:w-9/12 mobile:w-[90%] justify-between border-b border-dashed 
              border-gray-300 pb-[1rem] items-center'>
               <div className='flex flex-col gap-1'>
