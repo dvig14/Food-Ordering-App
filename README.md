@@ -27,11 +27,11 @@ This project is a Food Ordering website.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/username/mern-stack-project.git
+   git clone https://github.com/dvig14/Food-Ordering-App.git
    
 2. Install dependencies:
    ```bash
-   cd mern-stack-project
+   cd Food-Ordering-App
    npm install
    
 3. Set up environment variables:
