@@ -35,7 +35,7 @@ This project is a Food Ordering website.
    npm install
    
 3. Set up environment variables:
-   - Create a .env file in the root directory.
+   - Create a .env file in the backend folder root directory.
    - Define environment variables such as MONGODB_URI, JWT_SECRET, etc.
      
 4. Run the development server:
