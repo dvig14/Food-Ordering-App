@@ -41,11 +41,6 @@ This project is a Food Ordering website.
 4. Run the development server:
    ```bash
    npm run dev
-
-## Usage
-   1. Register a new user or login with an existing account.
-   2. Once logged in, you can view, add, update, and delete tasks.
-   3. Logout when finished.
       
 ## Contributing
 Contributions are welcome! If you find any bugs or have suggestions for improvements, please open an issue or submit a pull request.
