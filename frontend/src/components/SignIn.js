@@ -206,10 +206,6 @@ const SignIn = ({show,setExistMsg,setShowPg,isSignUp,setIsSignUp,setUser}) => {
              >
                {isSignUp && !registerNum ? 'continue' : registerNum ? 'verify otp' : 'login'}
              </button>
-             <p className='font-medium text-gray-600 mt-[1rem]'> 
-              <span className='text-red-500 '>Note : </span>
-              Currently Twilio OTP Service Is Off Therefore, Can't SignUp
-             </p>
           </form>
         </>
     )
