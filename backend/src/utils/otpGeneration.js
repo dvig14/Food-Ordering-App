@@ -46,7 +46,7 @@ const otpGeneration = async(res,email) => {
       transporter.sendMail(mailOptions, function(error, info){
         if (error) {
              res.json({msg:'error'})
-             reject(err);
+             reject(error);
         }
         else {
              res.json({msg : `Email sent: ${info.response}`});
