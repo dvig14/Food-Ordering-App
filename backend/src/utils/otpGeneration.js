@@ -36,13 +36,13 @@ const otpGeneration = async(res,email) => {
           pass: process.env.EMAIL_PASS
         }
     })
-    const mailOptions = {
+   const mailOptions = {
         from: process.env.MY_EMAIL,
         to: email,
         subject: 'Otp from yummy.com',
         text:`This is your Otp:${otp}. Don't share with anyone.`
     }  
-    transporter.sendMail(mailOptions, function(error, info){
+    await transporter.sendMail(mailOptions, function(error, info){
       if (error) res.json({msg:'error'})
       else res.json({msg : `Email sent: ${info.response}`});
     })
