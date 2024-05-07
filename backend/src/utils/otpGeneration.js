@@ -36,13 +36,14 @@ const otpGeneration = async(res,email) => {
          msg:'otp generated'
        })
     }
+
+await new Promise((resolve, reject) => {
    const mailOptions = {
         from: process.env.MY_EMAIL,
         to: email,
         subject: 'Otp from yummy.com',
         text:`This is your Otp:${otp}. Don't share with anyone.`
     }  
-await new Promise((resolve, reject) => {
     transporter.sendMail(mailOptions, function(error, info){
       if (error) {
            res.json({msg:'error'})
