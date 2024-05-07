@@ -38,11 +38,9 @@ const OtpSchema = new mongoose.Schema({
         minLength:6,
         maxLength:6
     },
-    phoneNumber : {
+    email : {
         type : String,
-        required : true,
-        minLength : 10,
-        maxLength : 10
+        required : true
     }
 
 })

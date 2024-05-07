@@ -46,7 +46,8 @@ const otpGeneration = async(res,email) => {
       if (error) res.json({msg:'error'})
       else res.json({msg : `Email sent: ${info.response}`});
     })
-   /* await twilioClient.messages.create({
+  
+   /*await twilioClient.messages.create({
         body : `Your OTP is: ${otp} from Yummy`,
         to : newPhnNum,
         from : process.env.TWILIO_PHONE_NUMBER
