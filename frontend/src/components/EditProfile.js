@@ -57,9 +57,9 @@ const EditProfile = ({phoneNum,email,id,fetchUser}) => {
        else{
         handleError(index)
         if(index === 0){
-          const res = await axios.patch(`${host}auth/signUp/${id}`,{index,phoneNumber : inpChng[0],verified:false})
-          if(res.data.msg === 'Number use by other user') handleError(0,res.data.msg)
-          else setOtp({...otp ,showOtp :true})
+         // const res = await axios.patch(`${host}auth/signUp/${id}`,{index,phoneNumber : inpChng[0],verified:false})
+          //if(res.data.msg === 'Number use by other user') handleError(0,res.data.msg)
+           setOtp({...otp ,showOtp :true})
         } 
         else if(index === 1){
           const res = await axios.patch(`${host}auth/signUp/${id}`,{index,email : inpChng[1],verified:false})
@@ -123,16 +123,23 @@ const EditProfile = ({phoneNum,email,id,fetchUser}) => {
                          />
                           <span className='absolute text-xs left-0 px-[1rem] pt-[0.5rem]' ref={type}>{val}</span>
                           </> : <>
-                           <input type='text'  className='border-2 w-[100%] px-[1rem] pt-[1.5rem] pb-[0.5rem] border-gray-400 
+                           {/*<input type='text'  className='border-2 w-[100%] px-[1rem] pt-[1.5rem] pb-[0.5rem] border-gray-400 
                             outline-none' value={otp.otpVal} onChange={(e)=>setOtp({...otp,otpVal : e.target.value})}/>
                             <span className='absolute text-xs left-0 px-[1rem] pt-[0.5rem]' ref={type}>Otp</span>
+                          */}
+                          <p className='w-[80vw] text-lg'>
+                            <span className='text-red-500'>Note : </span> 
+                            Currently Twilio service is off
+                          </p>
                           </>
                         }
                         </div>
+                      {!otp.showOtp &&
                         <button className='cursor-pointer bg-orange-500 text-white px-[1rem]' 
                          onClick={()=> !otp.showOtp ? handleVerify(index) : verifyOtp(index)}>
                           Verify
                         </button>
+                      }
                       </div>
                     }
                   </div>
