@@ -28,11 +28,11 @@ const otpGeneration = async(res,phoneNumber) => {
          msg:'otp generated'
        })
     }
-  /* await twilioClient.messages.create({
+   await twilioClient.messages.create({
         body : `Your OTP is: ${otp} from Yummy`,
         to : newPhnNum,
         from : process.env.TWILIO_PHONE_NUMBER
-    })*/
+    })
 }
 
 module.exports = otpGeneration
