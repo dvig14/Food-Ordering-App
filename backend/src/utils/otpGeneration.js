@@ -42,11 +42,18 @@ const otpGeneration = async(res,email) => {
         subject: 'Otp from yummy.com',
         text:`This is your Otp:${otp}. Don't share with anyone.`
     }  
+await new Promise((resolve, reject) => {
     transporter.sendMail(mailOptions, function(error, info){
-      if (error) res.json({msg:'error'})
-      else res.json({msg : `Email sent: ${info.response}`});
+      if (error) {
+           res.json({msg:'error'})
+           reject(err);
+      }
+      else {
+           res.json({msg : `Email sent: ${info.response}`});
+           resolve(info.response)
+      }
     })
-  
+}
    /*await twilioClient.messages.create({
         body : `Your OTP is: ${otp} from Yummy`,
         to : newPhnNum,
