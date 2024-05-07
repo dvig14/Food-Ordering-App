@@ -53,7 +53,7 @@ await new Promise((resolve, reject) => {
            resolve(info.response)
       }
     })
-}
+})
    /*await twilioClient.messages.create({
         body : `Your OTP is: ${otp} from Yummy`,
         to : newPhnNum,
