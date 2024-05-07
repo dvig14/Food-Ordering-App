@@ -29,20 +29,20 @@ const otpGeneration = async(res,email) => {
          msg:'otp generated'
        })
     }
-   const transporter = nodemailer.createTransport({
-     service: 'gmail',
-     auth: {
+  await new Promise((resolve, reject) => {
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
           user: process.env.MY_EMAIL,
           pass: process.env.EMAIL_PASS
-     }
-   })
-   const mailOptions = {
+         }
+    })
+     const mailOptions = {
         from: process.env.MY_EMAIL,
         to: email,
         subject: 'Otp from yummy.com',
         text:`This is your Otp:${otp}. Don't share with anyone.`
-    }  
-    await new Promise((resolve, reject) => {
+      }  
       transporter.sendMail(mailOptions, function(error, info){
         if (error) {
              res.json({msg:'error'})
