@@ -40,19 +40,18 @@ const SignIn = ({show,setExistMsg,setShowPg,isSignUp,setIsSignUp,setUser}) => {
           input[i].nextSibling.classList.replace('text-red-500','text-gray-500')
         }
       }
-      if(input[0].value.length < 10){
-        input[0].nextSibling.innerText = `Enter your ${input[0].name}`
+      if(input[0].value !== '' && !input[0].value.match(/^\w+([/.-]?\w+)*@\w+([/.-]?\w+)*(\.\w{2,3})+$/)){
+        input[0].nextSibling.innerText = `Invalid ${input[0].name} address`
         input[0].nextSibling.classList.replace('text-gray-500','text-red-500')
-      }
+      } 
       if(input[1] && input[1].value.length < 6 && input[1].name === 'One time password'){
         input[1].nextSibling.innerText = `Enter your ${input[1].name}`
         input[1].nextSibling.classList.replace('text-gray-500','text-red-500')
       }
-      if(input[2] && input[2].value !== '' && !input[2].value.match(/^\w+([/.-]?\w+)*@\w+([/.-]?\w+)*(\.\w{2,3})+$/)){
-        input[2].nextSibling.innerText = `Invalid ${input[2].name} address`
+      if(input[2] && input[2].value !== '' && input[2].value.length < 10){
+        input[2].nextSibling.innerText = `Enter your ${input[2].name}`
         input[2].nextSibling.classList.replace('text-gray-500','text-red-500')
-      } 
-
+      }
     }
 
     const timeOut = (input,msg,delay) => {
@@ -88,15 +87,15 @@ const SignIn = ({show,setExistMsg,setShowPg,isSignUp,setIsSignUp,setUser}) => {
       else if(otp.length < 6) handelError()
       else {
         handelError()
-        const {phoneNumber} = inputData
+        const {email} = inputData
         const res = await axios.post(`${host}auth/otpVerify`,{
            otp : Number(otp),
-           phoneNumber
+           email
         })
         if(res.data.msg === 'verified'){
           const response = isSignUp ? 
           await axios.post(`${host}auth/signup`,{...inputData,verified:true}) : 
-          await axios.post(`${host}auth/login`,{phoneNumber,verified:true}) 
+          await axios.post(`${host}auth/login`,{email,verified:true}) 
           const {accessToken,user} = await response.data
           localStorage.setItem('token',JSON.stringify(accessToken))
           localStorage.setItem('user',JSON.stringify(user))
@@ -118,10 +117,10 @@ const SignIn = ({show,setExistMsg,setShowPg,isSignUp,setIsSignUp,setUser}) => {
 
     const handelLogin = async(e) => {
       e.preventDefault()
-      const {phoneNumber} = inputData
-      if(phoneNumber === '' || phoneNumber.length < 10) handelError()
+      const {email} = inputData
+      if(email === '' || !email.match(/^\w+([/.-]?\w+)*@\w+([/.-]?\w+)*(\.\w{2,3})+$/)) handelError()
       else{
-        const response = await axios.post(`${host}auth/login`,{phoneNumber,verified:false})
+        const response = await axios.post(`${host}auth/login`,{email,verified:false})
         if(response.data.msg === 'otp updated' || response.data.msg === 'otp generated') timeOut(setRegisterNum,true,600)
         else if(response.data.msg === 'create an account') setIsSignUp(true)
       }
@@ -129,13 +128,13 @@ const SignIn = ({show,setExistMsg,setShowPg,isSignUp,setIsSignUp,setUser}) => {
 
     const handelChange = (e) => {
       const {name,value} = e.target
-      if(name === 'Phone number' && value.match(/^\d+$/) && !registerNum){
+      if(name === 'Phone number' && value.match(/^\d+$/)){
         setInputData({
           ...inputData,
           phoneNumber : value
         })   
       }
-      else if(name === 'Name' || name === 'Email'){
+      else if(name === 'Name' || (name === 'Email' && !registerNum)){
         setInputData({
           ...inputData,
           [name.toLowerCase()] : value
@@ -162,11 +161,11 @@ const SignIn = ({show,setExistMsg,setShowPg,isSignUp,setIsSignUp,setUser}) => {
           </div>
           <form className='flex flex-col w-11/12' ref={placeholder}>
              <div className='relative input-wrap'>
-              <input type='text' className='border border-gray-300 input w-[100%]' ref={input} value={inputData.phoneNumber}
-               name='Phone number' maxLength={10} onChange={handelChange}
+              <input type='text' className='border border-gray-300 input w-[100%]' ref={input} value={inputData.email}
+               name='Email' onChange={handelChange}
               /> 
-              <label className={`${inputData.phoneNumber !== '' && 'validInput'} text-gray-500`}>
-                Phone number
+              <label className={`${inputData.email !== '' && 'validInput'} text-gray-500`}>
+                Email
               </label>
              </div>
              {
@@ -190,11 +189,11 @@ const SignIn = ({show,setExistMsg,setShowPg,isSignUp,setIsSignUp,setUser}) => {
              </div>
              
              <div className='relative input-wrap'>
-              <input type='text'  className='border border-t-0 border-gray-300 input w-[100%]' value={inputData.email}
-                name='Email' onChange={handelChange}
+              <input type='text'  className='border border-t-0 border-gray-300 input w-[100%]' value={inputData.phoneNumber}
+                name='Phone number'  maxLength={10} onChange={handelChange}
               /> 
-              <label className={`${inputData.email !== '' && 'validInput'} text-gray-500`}>
-                Email
+              <label className={`${inputData.phoneNumber !== '' && 'validInput'} text-gray-500`}>
+                Phone Number
               </label>
              </div>
              </>
