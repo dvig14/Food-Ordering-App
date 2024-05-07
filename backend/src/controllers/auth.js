@@ -13,7 +13,7 @@ const signUpSchema = z.object({
 
 const otpSchema = z.object({
     otp : z.number(),
-    phoneNumber : z.string()
+    email : z.string()
 })
 
 const Register= async(req,res) => {
@@ -49,7 +49,7 @@ const Register= async(req,res) => {
             })
 
         }
-        else otpGeneration(res,phoneNumber)
+        else otpGeneration(res,email)
 
     }
     catch(err){
@@ -59,14 +59,14 @@ const Register= async(req,res) => {
 
 const OtpVerification = async(req,res) => {
        
-    const {otp,phoneNumber} = req.body
+    const {otp,email} = req.body
     const {success} = otpSchema.safeParse(req.body)
 
     if(!success) return res.json({msg:'not valid'})
     try{
         const verifiedOtp = await Otp.findOne({
             otp,
-            phoneNumber
+           email
         })
         if(verifiedOtp) res.json({msg:'verified'})
         else res.json({msg:'Invalid Otp Please Try Again'})
@@ -79,11 +79,11 @@ const OtpVerification = async(req,res) => {
 
 const Login = async(req,res) => {
 
-    const {phoneNumber,verified} = req.body
+    const {email,verified} = req.body
 
     try{
-        const user = await User.findOne({phoneNumber})
-        if(user && !verified) otpGeneration(res,phoneNumber)
+        const user = await User.findOne({email})
+        if(user && !verified) otpGeneration(res,email)
         else if(verified){
             const {_id} = user
             const accessToken = jwt.sign({_id},process.env.ACCESS_TOKEN_SCERET)
