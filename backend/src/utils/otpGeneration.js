@@ -6,13 +6,6 @@ const accountSid = process.env.TWILIO_ACCOUNT_SID
 const authToken = process.env.TWILIO_AUTH_TOKEN
 
 const twilioClient = new twilio(accountSid,authToken)  */ 
-const transporter = nodemailer.createTransport({
-     service: 'gmail',
-     auth: {
-          user: process.env.MY_EMAIL,
-          pass: process.env.EMAIL_PASS
-     }
-})
 
 const otpGeneration = async(res,email) => {
 
@@ -36,25 +29,23 @@ const otpGeneration = async(res,email) => {
          msg:'otp generated'
        })
     }
-
-await new Promise((resolve, reject) => {
+   const transporter = nodemailer.createTransport({
+     service: 'gmail',
+     auth: {
+          user: process.env.MY_EMAIL,
+          pass: process.env.EMAIL_PASS
+     }
+   })
    const mailOptions = {
         from: process.env.MY_EMAIL,
         to: email,
         subject: 'Otp from yummy.com',
         text:`This is your Otp:${otp}. Don't share with anyone.`
     }  
-    transporter.sendMail(mailOptions, function(error, info){
-      if (error) {
-           res.json({msg:'error'})
-           reject(err);
-      }
-      else {
-           res.json({msg : `Email sent: ${info.response}`});
-           resolve(info.response)
-      }
+    await transporter.sendMail(mailOptions, function(error, info){
+      if (error) res.json({msg:'error'})
+      else res.json({msg : `Email sent: ${info.response}`});
     })
-})
    /*await twilioClient.messages.create({
         body : `Your OTP is: ${otp} from Yummy`,
         to : newPhnNum,
