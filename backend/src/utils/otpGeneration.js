@@ -10,16 +10,10 @@ const otpGeneration = async (res, email) => {
     if (emailExist) {
       const id = emailExist._id;
       await Otp.findByIdAndUpdate(id, { otp }, { new: true });
-      res.json({
-        msg: 'otp updated'
-      });
     } else {
       await Otp.create({
         otp,
         email
-      });
-      res.json({
-        msg: 'otp generated'
       });
     }
 
@@ -44,7 +38,8 @@ const otpGeneration = async (res, email) => {
     console.log('sending...')
     await transporter.sendMail(message);
     console.log("OTP has been sent to your Email");
-
+    res.json({ msg: 'Otp sent' });
+    
   } catch (error) {
     console.error('Error sending email:', error);
     res.json({ msg: 'Error sending email' });
