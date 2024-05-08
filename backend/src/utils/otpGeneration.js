@@ -43,7 +43,9 @@ const otpGeneration = async(res,email) => {
         text:`This is your Otp:${otp}. Don't share with anyone.`
       }  
     try { 
+        console.log('sending...')
         const info = await transporter.sendMail(mailOptions); 
+         console.log('email sent',info.response)
         res.json({ msg: `Email sent: ${info.response}` });
     } 
     catch (error) { 
