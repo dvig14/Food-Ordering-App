@@ -73,7 +73,7 @@ const SignIn = ({show,setExistMsg,setShowPg,isSignUp,setIsSignUp,setUser}) => {
           setExistMsg(res.data.msg)
           timeOut(setExistMsg,'',3000)
         } 
-        else timeOut(setRegisterNum,true,200)
+        else if(res.data.msg === 'Otp sent')timeOut(setRegisterNum,true,200)
       } 
     }
     
@@ -121,7 +121,7 @@ const SignIn = ({show,setExistMsg,setShowPg,isSignUp,setIsSignUp,setUser}) => {
       if(email === '' || !email.match(/^\w+([/.-]?\w+)*@\w+([/.-]?\w+)*(\.\w{2,3})+$/)) handelError()
       else{
         const response = await axios.post(`${host}auth/login`,{email,verified:false})
-        if(response.data.msg === 'otp updated' || response.data.msg === 'otp generated') timeOut(setRegisterNum,true,600)
+        if(response.data.msg === 'Otp sent') timeOut(setRegisterNum,true,600)
         else if(response.data.msg === 'create an account') setIsSignUp(true)
       }
     }
