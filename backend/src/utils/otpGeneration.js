@@ -1,17 +1,20 @@
 const { Otp } = require('../db/authDb');
 const nodemailer = require('nodemailer');
 
-let isSending = false;
+// Session store for OTP values
+const session = {};
 
 const otpGeneration = async (res, email) => {
   try {
-    if (isSending) {
-      // If already sending, wait for the current sending process to finish
-      await new Promise(resolve => setTimeout(resolve, 1000)); 
-      return otpGeneration(res, email); // Retry sending after delay
+   
+    if (session[email]) {
+      const otp = session[email];
+      res.json({
+        msg: 'otp sent',
+        otp // Send the existing OTP
+      });
+      return; // Exit early since OTP is already sent
     }
-    
-    isSending = true;
 
     const otp = Math.floor(100000 + Math.random() * 900000);
     const emailExist = await Otp.findOne({ email });
@@ -31,6 +34,9 @@ const otpGeneration = async (res, email) => {
         msg: 'otp generated'
       });
     }
+
+    // Store OTP in session
+    session[email] = otp;
 
     const transporter = nodemailer.createTransport({
       port: 465,
@@ -54,7 +60,6 @@ const otpGeneration = async (res, email) => {
     await transporter.sendMail(message);
     console.log("OTP has been sent to your Email");
 
-    isSending = false;
   } catch (error) {
     console.error('Error sending email:', error);
     res.json({ msg: 'Error sending email' });
