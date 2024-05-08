@@ -2,7 +2,7 @@ const {Otp} = require('../db/authDb')
 const nodemailer = require('nodemailer');
 
 const otpGeneration = async(res,email) => {
-
+  try { 
     const otp = Math.floor(100000 + Math.random() * 900000)
     const emailExist = await Otp.findOne({email})
     
@@ -22,7 +22,6 @@ const otpGeneration = async(res,email) => {
          msg:'otp generated'
        })
     }
-try { 
     const transporter = nodemailer.createTransport({
         port: 465,
         host: "smtp.gmail.com",
