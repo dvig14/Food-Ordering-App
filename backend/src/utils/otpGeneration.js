@@ -3,10 +3,11 @@ const nodemailer = require('nodemailer');
 
 const otpGeneration = async(res,email) => {
   try { 
-    const otp = Math.floor(100000 + Math.random() * 900000)
+    let otp
     const emailExist = await Otp.findOne({email})
     
     if(emailExist){
+        otp = Math.floor(100000 + Math.random() * 900000)
         const id = emailExist._id
         await Otp.findByIdAndUpdate(id,{otp},{new:true})
         res.json({
@@ -14,6 +15,7 @@ const otpGeneration = async(res,email) => {
         })
     }
     else{
+       otp = Math.floor(100000 + Math.random() * 900000)
         await Otp.create({
           otp,
           email
