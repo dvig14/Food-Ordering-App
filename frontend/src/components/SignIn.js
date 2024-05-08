@@ -73,7 +73,7 @@ const SignIn = ({show,setExistMsg,setShowPg,isSignUp,setIsSignUp,setUser}) => {
           setExistMsg(res.data.msg)
           timeOut(setExistMsg,'',3000)
         } 
-        else timeOut(setRegisterNum,true,400)
+        else timeOut(setRegisterNum,true,200)
       } 
     }
     
